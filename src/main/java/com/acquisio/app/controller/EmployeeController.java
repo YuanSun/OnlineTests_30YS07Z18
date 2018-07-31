@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
@@ -24,12 +25,12 @@ public class EmployeeController {
 
     @RequestMapping("/employees")
     @CrossOrigin(origins = "http://localhost:4200")
-    public Collection<Employee> listEmployees() throws SQLException {
+    public Collection<String> listEmployees() throws SQLException {
         return employeeRepository.findAll().stream()
         .map(employee -> {
           return md5Hex(employee.getEmail());
         })
-        .collect(Collectors.toList());
+        .collect(Collectors.toCollection(ArrayList::new));
     }
     
     
