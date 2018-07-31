@@ -31,5 +31,22 @@ public class TreeNavigation {
         Node n4 = new Node("5", null, n3);
         Node n = new Node("2", n2, n4);
         // TODO: Implement code here
+        traverseTree(n, 2);
+    }
+    
+    private void traverseTree(Node root, int n) {
+      if (root == null) {
+        return;
+      }
+      
+      // print root
+      for (int i = 0; i < n; i++) {
+        System.out.print(".");
+      }
+      System.out.println(root.name);
+      
+      for (Node node: root.children) {
+        traverseTree(node, n+2);
+      }
     }
 }
