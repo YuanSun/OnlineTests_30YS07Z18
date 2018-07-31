@@ -3,6 +3,7 @@ package com.acquisio.basic.java.question06;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * QUESTION 07: Debugging
@@ -22,13 +23,16 @@ public class Debugging {
     Integer[] removeEvenNumbers(Integer ... values) {
         // TODO: Fix code here.
 
-        List<Integer> integers = new ArrayList<>(Arrays.asList(values));
+        List<Integer> integers = new ArrayList<>(Arrays.asList(values))
+        		.stream()
+        		.filter(i -> i % 2 != 0)
+        		.collect(Collectors.toList());
 
-        for (Integer i : integers) {
-            if (i % 2 == 0) { // remove even numbers
-                integers.remove(i);
-            }
-        }
+//        for (Integer i : integers) {
+//            if (i % 2 == 0) { // remove even numbers
+//                integers.remove(i);
+//            }
+//        }
 
         return integers.toArray(new Integer[integers.size()]);
     }

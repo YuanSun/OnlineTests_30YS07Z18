@@ -20,24 +20,24 @@ public class Generics {
 
     private void stockInventory() {
         // TODO: The following code should work with generics. No casting should be necessary.
-        Inventory fruitInventory = getFruitInventory();
-        Fruit apple = (Fruit) fruitInventory.findFirst("Apple");
+        Inventory<Fruit> fruitInventory = getFruitInventory();
+        Fruit apple = fruitInventory.findFirst("Apple");
         System.out.println(String.format("Apple [%s] : %d units", apple.getColor(), apple.getQuantity()));
-        Inventory vegetableInventory = getVegetableInventory();
-        Vegetable salad = (Vegetable) vegetableInventory.findFirst("Salad");
+        Inventory<Vegetable> vegetableInventory = getVegetableInventory();
+        Vegetable salad = vegetableInventory.findFirst("Salad");
         System.out.println(String.format("Salad [%s] : %d units", salad.getType(), salad.getQuantity()));
     }
 
-    private Inventory getVegetableInventory() {
-        Inventory vegetableInventory = new Inventory();
+    private Inventory<Vegetable> getVegetableInventory() {
+        Inventory<Vegetable> vegetableInventory = new Inventory<>();
         vegetableInventory.add(new Vegetable("Salad", "Iceberg", "Québec", 19, 1.39d));
         vegetableInventory.add(new Vegetable("Salad", "Boston", "Québec", 18, 1.39d));
         vegetableInventory.add(new Vegetable("Salad", "Iceberg", "USA", 17, 1.39d));
         return vegetableInventory;
     }
 
-    private Inventory getFruitInventory() {
-        Inventory fruitInventory = new Inventory();
+    private Inventory<Fruit> getFruitInventory() {
+        Inventory<Fruit> fruitInventory = new Inventory<>();
         fruitInventory.add(new Fruit("Apple", "red", 50, 0.99d));
         fruitInventory.add(new Fruit("Apple", "green", 45, 1.29d));
         fruitInventory.add(new Fruit("Banana", "yellow", 150, 0.49d));

@@ -22,7 +22,18 @@ public class FooBar {
     }
 
     String fooBar(int value) {
-        // TODO: Insert your code here
-        return null;
+        if (value % 15 == 0) {
+        	return "FooBar";
+        }
+        
+        if (value % 3 == 0) {
+        	return "Foo";
+        }
+        
+        if (value % 5 == 0) {
+        	return "Bar";
+        }
+        
+        return String.valueOf(value);
     }
 }
