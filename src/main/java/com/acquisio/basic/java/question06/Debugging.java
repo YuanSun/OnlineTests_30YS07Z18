@@ -28,12 +28,6 @@ public class Debugging {
         		.filter(i -> i % 2 != 0)
         		.collect(Collectors.toList());
 
-//        for (Integer i : integers) {
-//            if (i % 2 == 0) { // remove even numbers
-//                integers.remove(i);
-//            }
-//        }
-
         return integers.toArray(new Integer[integers.size()]);
     }
 }
