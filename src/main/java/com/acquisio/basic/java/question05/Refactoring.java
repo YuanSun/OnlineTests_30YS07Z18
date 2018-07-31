@@ -105,61 +105,127 @@ package com.acquisio.basic.java.question05;
  */
 public class Refactoring {
     Item[] items;
+    final static int MAXQUALITY = 50;
+    final static int LEGENDARYQUALITY = 80;
+    final static int ZEROQUALITY = 0;
+    final static int NORMALCHANGE = 1;
+    final static int DOUBLECHANGE = 2;
+    final static int TRIPLECHANGE = 3;
+    
+    final static String AGED_BRIE = "Aged Brie";
+    final static String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    final static String BACKSTAGE_PASSES_CONCERT = "Backstage passes to a TAFKAL80ETC concert";
+    final static String CONJURED = "Conjured";
 
+    final static int TENDAYS = 10;
+    final static int FIVEDAYS = 5;
+    
     public Refactoring(Item[] items) {
         this.items = items;
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
-            }
+//        for (Item item : items) {
+//            if (!item.name.equals(AGED_BRIE)
+//                    && !item.name.equals(BACKSTAGE_PASSES_CONCERT)) {
+//                if (item.quality > ZEROQUALITY) {
+//                    if (!item.name.equals(SULFURAS)) {
+//                        item.quality -= NORMALCHANGE;
+//                    }
+//                }
+//            } else {
+//                if (item.quality < MAXQUALITY) {
+//                    item.quality += NORMALCHANGE;
+//
+//                    if (item.name.equals(BACKSTAGE_PASSES_CONCERT)) {
+//                        if (item.sellIn < 11) {
+//                            if (item.quality < MAXQUALITY) {
+//                                item.quality += NORMALCHANGE;
+//                            }
+//                        }
+//
+//                        if (item.sellIn < 6) {
+//                            if (item.quality < MAXQUALITY) {
+//                                item.quality += NORMALCHANGE;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            if (!item.name.equals(SULFURAS)) {
+//                item.sellIn -= NORMALCHANGE;
+//            }
+//
+//            if (item.sellIn < 0) {
+//                if (!item.name.equals(AGED_BRIE)) {
+//                    if (!item.name.equals(BACKSTAGE_PASSES_CONCERT)) {
+//                        if (item.quality > ZEROQUALITY) {
+//                            if (!item.name.equals(SULFURAS)) {
+//                                item.quality -= NORMALCHANGE;
+//                            }
+//                        }
+//                    } else {
+//                        item.quality = ZEROQUALITY;
+//                    }
+//                } else {
+//                    if (item.quality < MAXQUALITY) {
+//                        item.quality += NORMALCHANGE;
+//                    }
+//                }
+//            }
+//        }
+      
+      for (Item item : items) {
+        switch(item.name) {
+          case AGED_BRIE:
+            incrementAGEDBRIE(item);
+            item.sellIn -= NORMALCHANGE;
+            break;
+            
+          case SULFURAS:
+            // Never has to be sold or decrease in quality --> no behavior, just make sure quality < 80
+            item.quality = item.quality > LEGENDARYQUALITY ? LEGENDARYQUALITY : item.quality;
+            break;
+            
+          case BACKSTAGE_PASSES_CONCERT:
+            incrementBACKSTAGE(item);
+            item.sellIn -= NORMALCHANGE;
+            break;
+            
+          case CONJURED:
+            item.quality = item.quality - DOUBLECHANGE >= ZEROQUALITY ? item.quality - DOUBLECHANGE : ZEROQUALITY;
+            item.sellIn -= NORMALCHANGE;
+            break;
+          
+          default:
+            item.quality = item.quality - NORMALCHANGE >= ZEROQUALITY ? item.quality - NORMALCHANGE : ZEROQUALITY;
+            item.sellIn -= NORMALCHANGE;
         }
+      }
+    }
+    
+    private void incrementAGEDBRIE(Item item) {
+      // more than 10 day, increment 1 on quality
+      if(item.sellIn > TENDAYS) {
+        item.quality = item.quality + NORMALCHANGE > MAXQUALITY ? MAXQUALITY : item.quality + NORMALCHANGE;
+      }
+      // 5 days < sellIn <= 10 days, increment by 2
+      if(item.sellIn <= TENDAYS && item.sellIn > FIVEDAYS) {
+        item.quality = item.quality + DOUBLECHANGE > MAXQUALITY ? MAXQUALITY : item.quality + DOUBLECHANGE;
+      }
+      // <= 5 days, increment by 3
+      if(item.sellIn <= FIVEDAYS) {
+        item.quality = item.quality + TRIPLECHANGE > MAXQUALITY ? MAXQUALITY : item.quality + TRIPLECHANGE;
+      }
+    }
+    
+    private void incrementBACKSTAGE(Item item) {
+      incrementAGEDBRIE(item);
+      
+      // quality drop to 0 when sellin <= 0
+      if(item.sellIn <= 0) {
+        item.quality = ZEROQUALITY;
+      }
     }
 }
