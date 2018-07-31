@@ -124,58 +124,7 @@ public class Refactoring {
         this.items = items;
     }
 
-    public void updateQuality() {
-//        for (Item item : items) {
-//            if (!item.name.equals(AGED_BRIE)
-//                    && !item.name.equals(BACKSTAGE_PASSES_CONCERT)) {
-//                if (item.quality > ZEROQUALITY) {
-//                    if (!item.name.equals(SULFURAS)) {
-//                        item.quality -= NORMALCHANGE;
-//                    }
-//                }
-//            } else {
-//                if (item.quality < MAXQUALITY) {
-//                    item.quality += NORMALCHANGE;
-//
-//                    if (item.name.equals(BACKSTAGE_PASSES_CONCERT)) {
-//                        if (item.sellIn < 11) {
-//                            if (item.quality < MAXQUALITY) {
-//                                item.quality += NORMALCHANGE;
-//                            }
-//                        }
-//
-//                        if (item.sellIn < 6) {
-//                            if (item.quality < MAXQUALITY) {
-//                                item.quality += NORMALCHANGE;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            if (!item.name.equals(SULFURAS)) {
-//                item.sellIn -= NORMALCHANGE;
-//            }
-//
-//            if (item.sellIn < 0) {
-//                if (!item.name.equals(AGED_BRIE)) {
-//                    if (!item.name.equals(BACKSTAGE_PASSES_CONCERT)) {
-//                        if (item.quality > ZEROQUALITY) {
-//                            if (!item.name.equals(SULFURAS)) {
-//                                item.quality -= NORMALCHANGE;
-//                            }
-//                        }
-//                    } else {
-//                        item.quality = ZEROQUALITY;
-//                    }
-//                } else {
-//                    if (item.quality < MAXQUALITY) {
-//                        item.quality += NORMALCHANGE;
-//                    }
-//                }
-//            }
-//        }
-      
+    public void updateQuality() {   
       for (Item item : items) {
         switch(item.name) {
           case AGED_BRIE:
