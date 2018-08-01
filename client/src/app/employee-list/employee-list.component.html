@@ -4,8 +4,8 @@
     <mat-list>
       <mat-list-item *ngFor="let employee of employees">
         <!-- Replace this image with the Gravatar image -->
-        <img mat-list-avatar src="assets/person.png" alt="{{employee.firstName}} {{employee.lastName}}">
-        <h3 mat-line>{{employee.id}} - {{employee.firstName}} {{employee.lastName}} [{{employee.email}}]</h3>
+        <img mat-list-avatar src="https://www.gravatar.com/avatar/{{employee.email}}" alt="{{employee.firstName}} {{employee.lastName}}">
+        <h3 mat-line>{{employee.id}} - {{employee.firstName}} {{employee.lastName}}</h3>
       </mat-list-item>
     </mat-list>
   </mat-card-content>
